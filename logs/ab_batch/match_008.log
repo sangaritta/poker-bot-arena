@@ -1,0 +1,15 @@
+===== BOT A =====
+[connect] wss://poker-bot-arena.fly.dev/ws as Prometheus (A)
+[welcome] seat=0 config={'variant': 'HUNL', 'seats': 3, 'starting_stack': 6000, 'sb': 50, 'bb': 100}
+[practice] waiting for partner | bot=A state=WAITING_FOR_PARTNER
+[hand H-20251113-00000] start | button=Prometheus (A)
+[hand H-20251113-00000] end | stacks=[{'seat': 0, 'stack': 0}, {'seat': 1, 'stack': 0}, {'seat': 2, 'stack': 18000}]
+[match] winner={'seat': 2, 'team': 'Prometheus (HOUSE)'}
+
+===== BOT B =====
+[connect] wss://poker-bot-arena.fly.dev/ws as Prometheus (B)
+[welcome] seat=1 config={'variant': 'HUNL', 'seats': 3, 'starting_stack': 6000, 'sb': 50, 'bb': 100}
+[hand H-20251113-00000] start | button=Seat 0
+[hand H-20251113-00000] end | stacks=[{'seat': 0, 'stack': 0}, {'seat': 1, 'stack': 0}, {'seat': 2, 'stack': 18000}]
+[match] winner={'seat': 2, 'team': 'Prometheus (HOUSE)'}
+

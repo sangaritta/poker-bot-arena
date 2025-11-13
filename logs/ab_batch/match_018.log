@@ -1,0 +1,91 @@
+===== BOT A =====
+[connect] wss://poker-bot-arena.fly.dev/ws as Prometheus (A)
+[welcome] seat=0 config={'variant': 'HUNL', 'seats': 3, 'starting_stack': 6000, 'sb': 50, 'bb': 100}
+[practice] waiting for partner | bot=A state=WAITING_FOR_PARTNER
+[hand H-20251113-00000] start | button=Prometheus (A)
+[hand H-20251113-00000] end | stacks=[{'seat': 0, 'stack': 6000}, {'seat': 1, 'stack': 5900}, {'seat': 2, 'stack': 6100}]
+[hand H-20251113-00001] start | button=Seat 1
+[hand H-20251113-00001] end | stacks=[{'seat': 0, 'stack': 3987}, {'seat': 1, 'stack': 5900}, {'seat': 2, 'stack': 8113}]
+[hand H-20251113-00002] start | button=Seat 2
+[hand H-20251113-00002] end | stacks=[{'seat': 0, 'stack': 3937}, {'seat': 1, 'stack': 0}, {'seat': 2, 'stack': 14063}]
+[hand H-20251113-00003] start | button=Prometheus (A)
+[hand H-20251113-00003] end | stacks=[{'seat': 0, 'stack': 3887}, {'seat': 1, 'stack': 0}, {'seat': 2, 'stack': 14113}]
+[hand H-20251113-00004] start | button=Seat 2
+[hand H-20251113-00004] end | stacks=[{'seat': 0, 'stack': 3787}, {'seat': 1, 'stack': 0}, {'seat': 2, 'stack': 14213}]
+[hand H-20251113-00005] start | button=Prometheus (A)
+[hand H-20251113-00005] end | stacks=[{'seat': 0, 'stack': 3737}, {'seat': 1, 'stack': 0}, {'seat': 2, 'stack': 14263}]
+[hand H-20251113-00006] start | button=Seat 2
+[hand H-20251113-00006] end | stacks=[{'seat': 0, 'stack': 3537}, {'seat': 1, 'stack': 0}, {'seat': 2, 'stack': 14463}]
+[hand H-20251113-00007] start | button=Prometheus (A)
+[hand H-20251113-00007] end | stacks=[{'seat': 0, 'stack': 3437}, {'seat': 1, 'stack': 0}, {'seat': 2, 'stack': 14563}]
+[hand H-20251113-00008] start | button=Seat 2
+[hand H-20251113-00008] end | stacks=[{'seat': 0, 'stack': 3337}, {'seat': 1, 'stack': 0}, {'seat': 2, 'stack': 14663}]
+[hand H-20251113-00009] start | button=Prometheus (A)
+[hand H-20251113-00009] end | stacks=[{'seat': 0, 'stack': 3237}, {'seat': 1, 'stack': 0}, {'seat': 2, 'stack': 14763}]
+[hand H-20251113-00010] start | button=Seat 2
+[hand H-20251113-00010] end | stacks=[{'seat': 0, 'stack': 3137}, {'seat': 1, 'stack': 0}, {'seat': 2, 'stack': 14863}]
+[hand H-20251113-00011] start | button=Prometheus (A)
+[hand H-20251113-00011] end | stacks=[{'seat': 0, 'stack': 3037}, {'seat': 1, 'stack': 0}, {'seat': 2, 'stack': 14963}]
+[hand H-20251113-00012] start | button=Seat 2
+[hand H-20251113-00012] end | stacks=[{'seat': 0, 'stack': 5379}, {'seat': 1, 'stack': 0}, {'seat': 2, 'stack': 12621}]
+[hand H-20251113-00013] start | button=Prometheus (A)
+[hand H-20251113-00013] end | stacks=[{'seat': 0, 'stack': 5329}, {'seat': 1, 'stack': 0}, {'seat': 2, 'stack': 12671}]
+[hand H-20251113-00014] start | button=Seat 2
+[hand H-20251113-00014] end | stacks=[{'seat': 0, 'stack': 5229}, {'seat': 1, 'stack': 0}, {'seat': 2, 'stack': 12771}]
+[hand H-20251113-00015] start | button=Prometheus (A)
+[hand H-20251113-00015] end | stacks=[{'seat': 0, 'stack': 5179}, {'seat': 1, 'stack': 0}, {'seat': 2, 'stack': 12821}]
+[hand H-20251113-00016] start | button=Seat 2
+[hand H-20251113-00016] end | stacks=[{'seat': 0, 'stack': 5079}, {'seat': 1, 'stack': 0}, {'seat': 2, 'stack': 12921}]
+[hand H-20251113-00017] start | button=Prometheus (A)
+[hand H-20251113-00017] end | stacks=[{'seat': 0, 'stack': 5029}, {'seat': 1, 'stack': 0}, {'seat': 2, 'stack': 12971}]
+[hand H-20251113-00018] start | button=Seat 2
+[hand H-20251113-00018] end | stacks=[{'seat': 0, 'stack': 10058}, {'seat': 1, 'stack': 0}, {'seat': 2, 'stack': 7942}]
+[hand H-20251113-00019] start | button=Prometheus (A)
+[hand H-20251113-00019] end | stacks=[{'seat': 0, 'stack': 18000}, {'seat': 1, 'stack': 0}, {'seat': 2, 'stack': 0}]
+[match] winner={'seat': 0, 'team': 'Prometheus (A)'}
+
+===== BOT B =====
+[connect] wss://poker-bot-arena.fly.dev/ws as Prometheus (B)
+[welcome] seat=1 config={'variant': 'HUNL', 'seats': 3, 'starting_stack': 6000, 'sb': 50, 'bb': 100}
+[hand H-20251113-00000] start | button=Seat 0
+[hand H-20251113-00000] end | stacks=[{'seat': 0, 'stack': 6000}, {'seat': 1, 'stack': 5900}, {'seat': 2, 'stack': 6100}]
+[hand H-20251113-00001] start | button=Prometheus (B)
+[hand H-20251113-00001] end | stacks=[{'seat': 0, 'stack': 3987}, {'seat': 1, 'stack': 5900}, {'seat': 2, 'stack': 8113}]
+[hand H-20251113-00002] start | button=Seat 2
+[hand H-20251113-00002] end | stacks=[{'seat': 0, 'stack': 3937}, {'seat': 1, 'stack': 0}, {'seat': 2, 'stack': 14063}]
+[hand H-20251113-00003] start | button=Seat 0
+[hand H-20251113-00003] end | stacks=[{'seat': 0, 'stack': 3887}, {'seat': 1, 'stack': 0}, {'seat': 2, 'stack': 14113}]
+[hand H-20251113-00004] start | button=Seat 2
+[hand H-20251113-00004] end | stacks=[{'seat': 0, 'stack': 3787}, {'seat': 1, 'stack': 0}, {'seat': 2, 'stack': 14213}]
+[hand H-20251113-00005] start | button=Seat 0
+[hand H-20251113-00005] end | stacks=[{'seat': 0, 'stack': 3737}, {'seat': 1, 'stack': 0}, {'seat': 2, 'stack': 14263}]
+[hand H-20251113-00006] start | button=Seat 2
+[hand H-20251113-00006] end | stacks=[{'seat': 0, 'stack': 3537}, {'seat': 1, 'stack': 0}, {'seat': 2, 'stack': 14463}]
+[hand H-20251113-00007] start | button=Seat 0
+[hand H-20251113-00007] end | stacks=[{'seat': 0, 'stack': 3437}, {'seat': 1, 'stack': 0}, {'seat': 2, 'stack': 14563}]
+[hand H-20251113-00008] start | button=Seat 2
+[hand H-20251113-00008] end | stacks=[{'seat': 0, 'stack': 3337}, {'seat': 1, 'stack': 0}, {'seat': 2, 'stack': 14663}]
+[hand H-20251113-00009] start | button=Seat 0
+[hand H-20251113-00009] end | stacks=[{'seat': 0, 'stack': 3237}, {'seat': 1, 'stack': 0}, {'seat': 2, 'stack': 14763}]
+[hand H-20251113-00010] start | button=Seat 2
+[hand H-20251113-00010] end | stacks=[{'seat': 0, 'stack': 3137}, {'seat': 1, 'stack': 0}, {'seat': 2, 'stack': 14863}]
+[hand H-20251113-00011] start | button=Seat 0
+[hand H-20251113-00011] end | stacks=[{'seat': 0, 'stack': 3037}, {'seat': 1, 'stack': 0}, {'seat': 2, 'stack': 14963}]
+[hand H-20251113-00012] start | button=Seat 2
+[hand H-20251113-00012] end | stacks=[{'seat': 0, 'stack': 5379}, {'seat': 1, 'stack': 0}, {'seat': 2, 'stack': 12621}]
+[hand H-20251113-00013] start | button=Seat 0
+[hand H-20251113-00013] end | stacks=[{'seat': 0, 'stack': 5329}, {'seat': 1, 'stack': 0}, {'seat': 2, 'stack': 12671}]
+[hand H-20251113-00014] start | button=Seat 2
+[hand H-20251113-00014] end | stacks=[{'seat': 0, 'stack': 5229}, {'seat': 1, 'stack': 0}, {'seat': 2, 'stack': 12771}]
+[hand H-20251113-00015] start | button=Seat 0
+[hand H-20251113-00015] end | stacks=[{'seat': 0, 'stack': 5179}, {'seat': 1, 'stack': 0}, {'seat': 2, 'stack': 12821}]
+[hand H-20251113-00016] start | button=Seat 2
+[hand H-20251113-00016] end | stacks=[{'seat': 0, 'stack': 5079}, {'seat': 1, 'stack': 0}, {'seat': 2, 'stack': 12921}]
+[hand H-20251113-00017] start | button=Seat 0
+[hand H-20251113-00017] end | stacks=[{'seat': 0, 'stack': 5029}, {'seat': 1, 'stack': 0}, {'seat': 2, 'stack': 12971}]
+[hand H-20251113-00018] start | button=Seat 2
+[hand H-20251113-00018] end | stacks=[{'seat': 0, 'stack': 10058}, {'seat': 1, 'stack': 0}, {'seat': 2, 'stack': 7942}]
+[hand H-20251113-00019] start | button=Seat 0
+[hand H-20251113-00019] end | stacks=[{'seat': 0, 'stack': 18000}, {'seat': 1, 'stack': 0}, {'seat': 2, 'stack': 0}]
+[match] winner={'seat': 0, 'team': 'Prometheus (A)'}
+
