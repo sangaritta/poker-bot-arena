@@ -280,31 +280,94 @@ class DecisionEngine:
         return DecisionResult("CALL", None)
 
     def _bet_size(self, ctx: DecisionContext, value: float, draws) -> int:
-        base = max(ctx.pot, ctx.table.bb * 2)
+        pot = ctx.pot
+        effective_stack = ctx.effective_stack
+        stack_to_pot_ratio = effective_stack / max(pot, 1)
+
+        # Advanced sizing based on game theory and stack depth
         if ctx.street == Street.FLOP:
-            multiplier = 0.65 if value >= 0.85 else 0.5
+            if value >= 0.9:  # Nuts/near nuts
+                multiplier = min(1.2, stack_to_pot_ratio * 0.8)  # Polarize with overbets when deep
+            elif value >= 0.8:  # Strong value
+                multiplier = 0.75
+            else:
+                multiplier = 0.5
         elif ctx.street == Street.TURN:
-            multiplier = 0.8 if value >= 0.88 else 0.55
-        else:
-            multiplier = 0.95 if value >= 0.9 else 0.6
+            if value >= 0.92:  # Very strong
+                multiplier = min(1.0, stack_to_pot_ratio * 0.6)
+            elif value >= 0.85:
+                multiplier = 0.8
+            else:
+                multiplier = 0.55
+        else:  # River
+            if value >= 0.95:
+                multiplier = min(0.9, stack_to_pot_ratio * 0.5)
+            elif value >= 0.88:
+                multiplier = 0.75
+            else:
+                multiplier = 0.6
+
+        # Adjust for draws and board texture
         if draws.flush_draw or draws.straight_draw:
-            multiplier = max(multiplier, 0.55)
+            draw_equity = min(draws.outs / 18, 1.0)
+            multiplier = max(multiplier, 0.5 + draw_equity * 0.3)
+
         if ctx.board_texture.label == "Wet":
-            multiplier += 0.1
-        amount = int(base * multiplier) + (ctx.call_amount or 0)
+            multiplier += 0.15  # Bet bigger on coordinated boards
+        elif ctx.board_texture.label == "Dry":
+            multiplier -= 0.1   # Smaller bets on dry boards
+
+        # Opponent-specific adjustments
+        profile = self._villain_profile(ctx)
+        aggression = profile.get("agg", 1.0) or 1.0
+        if aggression > 1.3:  # Vs aggressive opponents
+            multiplier *= 1.1  # Bet bigger to deny them initiative
+        elif aggression < 0.8:  # Vs passive opponents
+            multiplier *= 0.9  # Smaller bets to get value
+
+        amount = int(pot * multiplier)
         min_total = ctx.min_raise_to or ((ctx.call_amount or 0) + max(ctx.min_raise_increment or ctx.table.bb, ctx.table.bb))
         amount = max(amount, min_total)
         if ctx.max_raise_to is not None:
             amount = min(amount, ctx.max_raise_to)
+
         return max(amount, (ctx.call_amount or 0) + max(ctx.min_raise_increment, ctx.table.bb))
 
     def _bluff_spot(self, ctx: DecisionContext, aggression: float) -> bool:
+        """Advanced bluffing logic based on board texture, opponent tendencies, and game state"""
         random_factor = self.rng.random()
-        if ctx.board_texture.label == "Dry" and random_factor < 0.35:
-            return True
-        if aggression < 1 and ctx.equity_vs_range > 0.35 and random_factor < 0.25:
-            return True
-        return False
+
+        # Board texture adjustments
+        board_bonus = 0.0
+        if ctx.board_texture.label == "Dry":
+            board_bonus += 0.25  # Much more likely to bluff on dry boards
+        elif ctx.board_texture.label == "Wet":
+            board_bonus -= 0.1   # Less likely on wet boards
+
+        # Opponent aggression adjustments
+        opp_bonus = 0.0
+        if aggression > 1.5:  # Vs very aggressive opponents
+            opp_bonus += 0.2   # Bluff more to balance vs maniacs
+        elif aggression < 0.7: # Vs passive opponents
+            opp_bonus += 0.15  # Bluff more vs calling stations
+
+        # Position and stack adjustments
+        position_bonus = 0.1 if ctx.position.name in ["BTN", "CO"] else 0.0
+        stack_pressure = 0.1 if ctx.effective_bb < 15 else 0.0
+
+        # Street-specific adjustments
+        street_bonus = 0.0
+        if ctx.street == Street.FLOP:
+            street_bonus = 0.05  # Slightly more bluffs on flop
+        elif ctx.street == Street.TURN:
+            street_bonus = 0.1   # More bluffs on turn
+        elif ctx.street == Street.RIVER:
+            street_bonus = 0.15  # Most bluffs on river
+
+        total_bluff_freq = 0.12 + board_bonus + opp_bonus + position_bonus + stack_pressure + street_bonus
+        total_bluff_freq = min(0.6, max(0.05, total_bluff_freq))  # Cap between 5% and 60%
+
+        return random_factor < total_bluff_freq
 
     def _should_check_raise(
         self,

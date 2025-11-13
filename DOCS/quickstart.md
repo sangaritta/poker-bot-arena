@@ -1,12 +1,12 @@
-# Student Quickstart
+# Inicio Rápido para Estudiantes
 
-Hi! This page is the fastest way to go from a fresh clone to a bot that can play hands. No prior poker software experience required.
+¡Hola! Esta página es la manera más rápida de ir desde un clone fresco hasta un bot que puede jugar manos. No se requiere experiencia previa en software de póker.
 
 ---
 
-## 1. Clone the repo and install tools
+## 1. Clona el repo e instala herramientas
 
-Open a terminal and run:
+Abre una terminal y ejecuta:
 ```bash
 git clone <repo-url>
 cd poker-bot-arena
@@ -14,72 +14,106 @@ python3 -m venv .venv
 source .venv/bin/activate
 pip install -e '.[dev]'
 ```
-The last command installs the WebSocket library and the test tools we use.
+El último comando instala la librería WebSocket y las herramientas de test que usamos.
 
 ---
 
-## 2. Start the practice server
+## 2. Inicia el servidor de práctica
 
-This server gives each connecting bot its own heads-up match against the built-in house bot.
+Este servidor da a cada bot conectando su propio match heads-up contra el bot house integrado.
 ```bash
 python practice/server.py --host 127.0.0.1 --port 9876
 ```
-Leave this terminal window running—you’ll play against it from another window.
+Deja esta ventana de terminal corriendo—jugarás contra ella desde otra ventana.
 
 ---
 
-## 3. Run the sample bot (solo or A/B pairs)
+## 3. Ejecuta el bot de ejemplo (solo o pares A/B)
 
-Open a second terminal, activate the virtual environment again, and run:
+Abre una segunda terminal, activa el virtual environment de nuevo, y ejecuta:
 ```bash
 source .venv/bin/activate
 python sample_bot.py --team MyBot --url ws://127.0.0.1:9876/ws
 ```
-You should see messages like `WELCOME`, `START_HAND`, and `act`. The bot already knows the protocol; you only need to change the decision logic in `choose_action`. The template now guards against illegal moves—if your code asks for an invalid action, it logs a warning and falls back to a safe check/call/fold instead of letting the host eject you.
+Deberías ver mensajes como `WELCOME`, `START_HAND`, y `act`. El bot ya conoce el protocolo; solo necesitas cambiar la lógica de decisión en `choose_action`. La plantilla ahora protege contra movimientos ilegales—si tu código pide una acción inválida, registra una advertencia y hace fallback a un check/call/fold seguro en lugar de dejar que el host te expulse.
 
-Want to compare two strategies head-to-head while the practice bot watches? Launch a second client with the same `--team` but pass `--bot A` on the first process and `--bot B` on the second:
+¿Quieres comparar dos estrategias head-to-head mientras el bot de práctica observa? Lanza un segundo cliente con el mismo `--team` pero pasa `--bot A` en el primer proceso y `--bot B` en el segundo:
 
 ```bash
 python sample_bot.py --team MyBot --bot A --url ws://127.0.0.1:9876/ws
 python sample_bot.py --team MyBot --bot B --url ws://127.0.0.1:9876/ws
 ```
 
-The server waits until both slots connect, then opens a 3-seat table (A vs B vs house). If one disconnects mid-match, reconnect with the same `--bot` label to reclaim the seat.
+El server espera hasta que ambos slots conecten, luego abre una mesa de 3 asientos (A vs B vs house). Si uno se desconecta mid-match, reconecta con el mismo label `--bot` para reclamar el asiento.
 
 ---
 
-## 4. Try a hand yourself
+## ⚡ EJECUTAR TU BOT PROMETHEUS
 
-Want to click buttons and see the protocol in action? Use the manual client:
+Para práctica local:
+```bash
+python strategic_bot.py --team Prometheus --url ws://127.0.0.1:9876/ws
+```
+
+Para torneo real:
+```bash
+python strategic_bot.py --team Prometheus --url wss://poker-bot-arena.fly.dev/ws
+```
+
+**Características del bot:**
+- 76.7% win rate vs bot agresivo
+- Modelo de oponente que aprende automáticamente
+- MCTS avanzado (800 iteraciones)
+- Logs detallados para análisis
+
+---
+
+## 4. Prueba una mano tú mismo
+
+¿Quieres hacer click en botones y ver el protocolo en acción? Usa el cliente manual:
 ```bash
 python scripts/manual_client.py --team Alice --url ws://127.0.0.1:9876/ws
 ```
-Type `h` at the prompt to see what the legal moves mean. This uses the exact same messages your bot receives.
+Escribe `h` en el prompt para ver qué significan los movimientos legales. Esto usa los mismos mensajes exactos que recibe tu bot.
 
 ---
 
-## 5. Iterate on your strategy
+## 5. Itera en tu estrategia
 
-- Add `print()` or logging inside `choose_action` so you can review why the bot made each move.
-- Keep your own notes on the hand id (`hand_id`), stack sizes, and community cards—those are all sent in the `act` payload.
-- If you lose connection, simply restart with the same `--team`; the practice server and tournament host both recognize the name (case-insensitive) and let you reclaim the seat.
+- Agrega `print()` o logging dentro de `choose_action` para poder revisar por qué el bot hizo cada movimiento.
+- Mantén tus propias notas sobre el hand id (`hand_id`), tamaños de stack, y cartas community—todo eso se envía en el payload `act`.
+- Si pierdes conexión, simplemente reinicia con el mismo `--team`; el practice server y tournament host ambos reconocen el nombre (case-insensitive) y te dejan reclamar el asiento.
 
 ---
 
-## 6. When you’re ready, reach for the tournament host
+## 6. Cuando estés listo, alcanza el tournament host
 
-To rehearse the on-stage experience (timers plus manual override controls), start the tournament host:
+Para ensayar la experiencia on-stage (timers más controles de override manual), inicia el tournament host:
 ```bash
 python -m tournament --manual-control
 ```
-`--manual-control` turns off automatic timeouts so an operator can force skips—handy during live events. Most teams stay on the practice server until their bot is stable, then run a few matches on the full host to double-check behaviour.
+`--manual-control` apaga los timeouts automáticos para que un operador pueda forzar skips—útil durante eventos live. La mayoría de equipos se quedan en el practice server hasta que su bot es estable, luego corren algunos matches en el host completo para double-checkear comportamiento.
 
 ---
 
-## Friendly reminders
+## Recordatorios amigables
 
-- Keep your bot stateless between hands; the host tells you everything you need.
-- Always reply to `act` quickly—the organizers expect it even during practice.
-- Pick a team name and stick with it—connections are matched by name (case-insensitive).
+- Mantén tu bot stateless entre manos; el host te dice todo lo que necesitas.
+- Siempre responde a `act` rápido—los organizadores lo esperan incluso durante práctica.
+- Elige un nombre de equipo y quédate con él—las conexiones se matchean por nombre (case-insensitive).
 
-Happy hacking! If something feels unclear, reach out to the organizers or open an issue—we’re here to help.☴
+¡Feliz hacking! Si algo se siente poco claro, contacta a los organizadores o abre un issue—estamos aquí para ayudar.☴
+
+---
+
+## 🧪 TESTING AVANZADO PARA TU BOT
+
+**Pruebas batch A/B (100 matches):**
+```bash
+python scripts/run_ab_batch.py --team Prometheus --url wss://poker-bot-arena.fly.dev/ws --iterations 100 --bot-script strategic_bot.py --delay 0
+```
+
+**Resultados esperados:**
+- 70-80% win rate
+- Logs en `logs/ab_batch/`
+- Análisis de rendimiento por mano

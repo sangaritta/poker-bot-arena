@@ -110,14 +110,17 @@ class OpponentModel:
         combos = base.combos()
         profile = self.get(seat)
 
+        # More sophisticated range estimation based on opponent tendencies
         if profile.classification == "NIT":
-            combos = select_top_fraction(combos, 0.35)
+            combos = select_top_fraction(combos, 0.25)  # Even tighter vs nits
         elif profile.classification == "TAG":
-            combos = select_top_fraction(combos, 0.5)
+            combos = select_top_fraction(combos, 0.4)   # Tighter vs TAGs
         elif profile.classification == "LAG":
-            combos = select_top_fraction(combos, 0.7)
+            combos = select_top_fraction(combos, 0.8)   # Wider vs LAGs
         else:  # Maniac
-            combos = select_top_fraction(combos, 0.9)
+            # Use VPIP to estimate range more precisely
+            vpip_adjustment = min(1.0, max(0.3, profile.vpip * 1.2))
+            combos = select_top_fraction(combos, vpip_adjustment)
         profile.range_cache = combos
         return combos
 

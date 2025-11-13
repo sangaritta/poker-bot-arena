@@ -24,7 +24,7 @@ class ActionNode:
 
 
 class MonteCarloActionSearch:
-    def __init__(self, max_iterations: int = 180, exploration: float = 1.4) -> None:
+    def __init__(self, max_iterations: int = 800, exploration: float = 1.2) -> None:
         self.max_iterations = max_iterations
         self.exploration = exploration
 
@@ -34,7 +34,7 @@ class MonteCarloActionSearch:
             return seed
         nodes = [ActionNode(action=action, amount=amount) for action, amount in candidates]
         start = time.monotonic()
-        time_budget = max(0.05, (ctx.time_ms - 200) / 1000.0)
+        time_budget = max(0.15, (ctx.time_ms - 200) / 1000.0)
         iteration = 0
         while (
             iteration < self.max_iterations
